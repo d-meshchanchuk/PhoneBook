@@ -3,7 +3,10 @@ package com.myproject.phonebook.service.impl;
 import com.myproject.phonebook.dto.RegistrationUserDto;
 import com.myproject.phonebook.dto.UserDto;
 import com.myproject.phonebook.mapper.UserMapper;
+import com.myproject.phonebook.model.Role;
+import com.myproject.phonebook.model.Status;
 import com.myproject.phonebook.model.User;
+import com.myproject.phonebook.repository.RoleRepository;
 import com.myproject.phonebook.repository.UserRepository;
 import com.myproject.phonebook.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,6 +25,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+    private final RoleRepository roleRepository;
 
     @Override
     public List<UserDto> findAll() {
@@ -54,7 +59,15 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public void save(RegistrationUserDto registrationUserDto) {
+        //todo выбор картинки и загрузка
         User user = userMapper.toUser(registrationUserDto);
+
+        List<Role> userRoles = new ArrayList<>();
+        userRoles.add(roleRepository.findByName("ROLE_USER"));
+
+        user.setRoles(userRoles);
+        user.setStatus(Status.ACTIVE);
+
         userRepository.save(user);
         log.info("IN save - tariff: {} successfully created", user);
     }

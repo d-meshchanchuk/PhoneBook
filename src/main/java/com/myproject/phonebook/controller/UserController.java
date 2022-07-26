@@ -21,7 +21,6 @@ public class UserController {
     public String getUsers(Model model) {
         List<UserDto> users = userService.findAll();
         model.addAttribute("users", users);
-        System.out.println(users);
         return "all-users";
     }
 }

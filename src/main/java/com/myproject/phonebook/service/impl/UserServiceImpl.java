@@ -1,12 +1,8 @@
 package com.myproject.phonebook.service.impl;
 
-import com.myproject.phonebook.dto.RegistrationUserDto;
 import com.myproject.phonebook.dto.UserDto;
 import com.myproject.phonebook.mapper.UserMapper;
-import com.myproject.phonebook.model.Role;
-import com.myproject.phonebook.model.Status;
 import com.myproject.phonebook.model.User;
-import com.myproject.phonebook.repository.RoleRepository;
 import com.myproject.phonebook.repository.UserRepository;
 import com.myproject.phonebook.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,14 +20,13 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
-    private final RoleRepository roleRepository;
 
     @Override
     public List<UserDto> findAll() {
         List<User> users = userRepository.findAll();
         List<UserDto> result = users.stream().map(userMapper::UserDtoFromUser)
                 .collect(Collectors.toList());
-        log.info("IN getAll - {} users found", result.size());
+        log.info("IN findAll - {} users found", result.size());
         return result;
     }
 
@@ -50,7 +44,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto findById(Long id) throws Exception {
-        //обработать ExceptionHandler
+        //todo обработать ExceptionHandler
         User user = userRepository.findById(id).orElseThrow(Exception::new);
         log.info("IN findById - user: {} found by id: {}", user, id);
         return userMapper.UserDtoFromUser(user);
@@ -58,18 +52,10 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public void save(RegistrationUserDto registrationUserDto) {
-        //todo выбор картинки и загрузка
-        User user = userMapper.toUser(registrationUserDto);
-
-        List<Role> userRoles = new ArrayList<>();
-        userRoles.add(roleRepository.findByName("ROLE_USER"));
-
-        user.setRoles(userRoles);
-        user.setStatus(Status.ACTIVE);
-
+    public void save(UserDto userDto) {
+        User user = userMapper.toUser(userDto);
         userRepository.save(user);
-        log.info("IN save - tariff: {} successfully created", user);
+        log.info("IN save - user: {} successfully created", user);
     }
 
     @Transactional

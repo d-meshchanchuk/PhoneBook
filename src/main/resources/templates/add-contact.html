@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Создать контакт</title>
+</head>
+<body>
+
+<form th:method="POST" th:action="@{/contacts/save}" th:object="${contact}">
+    <label for="firstName">Имя : </label>
+    <input type="text" th:field="*{firstName}" id="firstName"/>
+    <br/>
+    <label for="lastName">Фамилия: </label>
+    <input type="text" th:field="*{lastName}" id="lastName"/>
+    <br/>
+    <label for="email">Почта: </label>
+    <input type="text" th:field="*{email}" id="email"/>
+    <br/>
+    <label for="phoneNumber">Номер телефона: </label>
+    <input type="text" th:field="*{phoneNumber}" id="phoneNumber"/>
+    <br/>
+    <label for="photoUrl">Фото: </label>
+    <input type="text" th:field="*{photoUrl}" id="photoUrl"/>
+    <br/>
+    <input type="submit" value="Добавить"/>
+</form>
+
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Список всех контактов</title>
+</head>
+<body>
+<h1>Список всех контактов</h1>
+
+<form th:method="GET" th:action="@{/contacts/addContact}" th:object="${contact}">
+    <input type="submit" value="Добавить контакт"/>
+</form>
+
+<table>
+    <tr>
+        <th>№</th>
+        <th>Имя</th>
+        <th>Фамилия</th>
+        <th>Почта</th>
+        <th>Номер телефона</th>
+        <th>Фото</th>
+    </tr>
+    <tr th:each="contact : ${contacts}">
+        <td th:text="${contact.id}"></td>
+        <td th:text="${contact.firstName}"></td>
+        <td th:text="${contact.lastName}"></td>
+        <td th:text="${contact.email}"></td>
+        <td th:text="${contact.phoneNumber}"></td>
+        <td><img th:src="@{'/img/' + ${contact.photoUrl}}" alt="" th:style="'max-width: 100px; max-height: 100px'"/>
+        </td>
+        <td>
+            <a th:href="@{/contacts/{id}(id=${contact.id})}">Delete</a>
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>

@@ -9,26 +9,16 @@
 <table>
     <tr>
         <th>№</th>
-        <th>Дата добавления</th>
         <th>Имя</th>
-        <th>Фамилия</th>
-        <th>Эл. почта</th>
-        <th>Номер телефона</th>
-        <th>Фото</th>
     </tr>
     <tr th:each="user : ${users}">
         <td th:text="${user.id}"></td>
-        <td th:text="${#temporals.format(user.created, 'yyyy-MM-dd HH:mm:ss')}"></td>
-        <td th:text="${user.firstName}"></td>
-        <td th:text="${user.lastName}"></td>
-        <td th:text="${user.email}"></td>
-        <td th:text="${user.phoneNumber}"></td>
-        <td><img th:src="@{${user.photoUrl}}" alt=""/></td>
-
+        <td th:text="${user.username}"></td>
+<!--        <td th:text="${user.email}"></td>-->
+<!--        <td th:text="${user.phoneNumber}"></td>-->
+<!--        <td ><img th:src="@{'/img/' + ${user.photoUrl}}" alt="" th:style="'max-width: 100px; max-height: 100px'"/></td>-->
     </tr>
 </table>
-
-
 
 </body>
 </html>

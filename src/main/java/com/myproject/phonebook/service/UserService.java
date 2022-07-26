@@ -1,6 +1,5 @@
 package com.myproject.phonebook.service;
 
-import com.myproject.phonebook.dto.RegistrationUserDto;
 import com.myproject.phonebook.dto.UserDto;
 
 import java.util.List;
@@ -13,7 +12,7 @@ public interface UserService {
 
     UserDto findById(Long id) throws Exception;
 
-    void save(RegistrationUserDto registrationUserDto);
+    void save(UserDto userDto);
 
     void delete(Long id);
 }
